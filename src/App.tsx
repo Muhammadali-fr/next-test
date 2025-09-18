@@ -1,31 +1,25 @@
-import { useQuery } from "@tanstack/react-query"
-import axios from "axios"
+// react router dom
+import { createBrowserRouter, createRoutesFromElements, RouterProvider, Route } from "react-router-dom"
+
+// pages
+import MainLayout from "./layout/MainLayout"
+import Home from "./pages/Home"
 
 export default function App() {
 
-  const getPosts = async () => {
-    return await axios.get('https://jsonplaceholder.typicode.com/posts');
-  }
-
-  const { data: todos, isPending } = useQuery({
-    queryKey: ['data'],
-    queryFn: getPosts
-  });
-
-  if (isPending) {
-    return 'loading ...'
-  }
-
-  console.log(todos?.data)
-
-  return (
-    <div>
-      {todos?.data.map((item: { userId: number, id: number, title: string, body: string }) => (
-        <div key={item.id}>
-          {item.title}
-        </div>
-      ))}
-    </div>
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route>
+        <Route path="/" element={<MainLayout />}>
+          <Route path="home/:id" element={<Home />} />
+        </Route>
+      </Route>
+    )
   )
 
-};
+  return (
+    <>
+      <RouterProvider router={router} />
+    </>
+  )
+}
