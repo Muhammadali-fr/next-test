@@ -1,5 +1,7 @@
+// components
+
 export default function page(){
   return (
-    <h1>app</h1>
+    <div>salom</div>
   )
 }
