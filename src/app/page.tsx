@@ -1,25 +1,32 @@
-import axios from "axios";
+// next 
+import Link from "next/link";
 
-type Post = {
-  userId: number;
-  id: number;
-  title: string;
-  body: string;
-}
+// types 
+import { Products } from "@/types/product";
 
 export default async function Home() {
 
-  const { data } = await axios.get<Post[]>('https://jsonplaceholder.typicode.com/posts');
-  console.log(data);
+  const res = await fetch('http://localhost:8000/product', {
+    cache: "no-store",
+  });
+
+  if (!res.ok) {
+    throw new Error('Mahsulotlarni olib kelishda xato');
+  }
+
+  const products:Products[] = await res.json();
 
   return (
     <div>
-      {data.map((item) => (
-        <div key={item.id}>
-          <p>{item.title}</p>
-          <strong>{item.body}</strong>
-        </div>
-      ))}
+      {
+        products.map((product: Products) => (
+          <li key={product.id}>
+            <Link href={`product/${product.id}`}>
+              <p>{product.name}</p>
+            </Link>
+          </li>
+        ))
+      }
     </div>
   );
 }
