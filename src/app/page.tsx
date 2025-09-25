@@ -1,32 +1,31 @@
-// next 
-import Link from "next/link";
+'use client'
+import { useState } from "react";
 
-// types 
-import { Products } from "@/types/product";
+export default function Home() {
+  const [user, setUser] = useState({
+    name: '',
+    username: '',
+    email: '',
+    password: ''
+  })
 
-export default async function Home() {
+  const  handleChange = (e: any) => {
+    setUser((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }))
+  };
 
-  const res = await fetch('http://localhost:8000/product', {
-    cache: "no-store",
-  });
-
-  if (!res.ok) {
-    throw new Error('Mahsulotlarni olib kelishda xato');
-  }
-
-  const products:Products[] = await res.json();
+  console.log(user);
 
   return (
     <div>
-      {
-        products.map((product: Products) => (
-          <li key={product.id}>
-            <Link href={`product/${product.id}`}>
-              <p>{product.name}</p>
-            </Link>
-          </li>
-        ))
-      }
+      <form>
+        <input name="name" className="border" onChange={handleChange} type="text" />
+        <input name="username" className="border" onChange={handleChange} type="text" />
+        <input name="email" className="border" onChange={handleChange} type="email" />
+        <input name="password" className="border" onChange={handleChange} type="password" />
+      </form>
     </div>
   );
 }
