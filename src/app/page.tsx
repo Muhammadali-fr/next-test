@@ -1,31 +1,15 @@
-'use client'
-import { useState } from "react";
+import { allProducts } from "@/api/products"
 
-export default function Home() {
-  const [user, setUser] = useState({
-    name: '',
-    username: '',
-    email: '',
-    password: ''
-  })
+export default async function page(){
 
-  const  handleChange = (e: any) => {
-    setUser((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value
-    }))
-  };
-
-  console.log(user);
+  const res = await allProducts();
+  console.log(res);
 
   return (
     <div>
-      <form>
-        <input name="name" className="border" onChange={handleChange} type="text" />
-        <input name="username" className="border" onChange={handleChange} type="text" />
-        <input name="email" className="border" onChange={handleChange} type="email" />
-        <input name="password" className="border" onChange={handleChange} type="password" />
-      </form>
+      {res.map((item) => (
+        <p>{item.id}</p>
+      ))}
     </div>
-  );
+  )
 }
