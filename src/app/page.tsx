@@ -1,15 +1,11 @@
-import { allProducts } from "@/api/products"
+import Image from "next/image";
+import bg from "@/public/bg.png"
 
-export default async function page(){
-
-  const res = await allProducts();
-  console.log(res);
+export default function page() {
 
   return (
     <div>
-      {res.map((item) => (
-        <p>{item.id}</p>
-      ))}
+      <Image src={bg} alt="data" fill />
     </div>
   )
 }

@@ -10,3 +10,10 @@ export type Products = {
     userId: string;
     categoryId: string;
 }
+
+export type Todo = {
+  userId: number;
+  id: number;
+  body: string;
+  title: string;
+};
